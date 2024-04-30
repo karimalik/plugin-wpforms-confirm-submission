@@ -12,24 +12,16 @@ add_action('wpforms_process_complete', 'wpforms_confirm_submission', 10, 4);
 function wpforms_confirm_submission($fields, $entry, $form_data, $entry_id) {
     // Check if the form ID is 945 (replace 945 with the ID of your WPForms form)
     if ($form_data['id'] == 945) {
-        // Get the form object
-        $form = wpforms()->form->get($form_data['id']);
-        
-        // Get the ID of the email field
-        $email_field_id = $form->get_field_id('email');
         // Get the email from the fields using the ID
-        $user_email = $fields[$email_field_id];
+        $user_email = $fields['1']['value']; // Remplacez '1' par l'ID de votre champ email
         
-        // Get the ID of the name field
-        $name_field_id = $form->get_field_id('name');
         // Get the name from the fields using the ID
-        $user_name = $fields[$name_field_id];
+        $user_name = $fields['2']['value']; // Remplacez '2' par l'ID de votre champ nom
         
         // Customize your confirmation message here
-        $message = "Dear $user_name,\n\nThank you for your submission. We have received your message and will get back to you shortly.\n\nRegards,\nYour Website";
+        $message = "Cher $user_name,\n\nMerci pour votre soumission. Nous avons reçu votre message et nous vous répondrons sous peu.\n\nCordialement,\nVotre site Web";
         
         // Send the confirmation email
-        wp_mail($user_email, 'Confirmation of Form Submission', $message);
+        wp_mail($user_email, 'Confirmation de soumission du formulaire', $message);
     }
 }
-
